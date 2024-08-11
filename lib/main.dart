@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ungconnectedapi/states/authen.dart';
 import 'package:ungconnectedapi/utility/app_constant.dart';
 
@@ -11,9 +12,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       home: Authen(),
-      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: AppConstant.mainColor)),
+      theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: AppConstant.mainColor)),
     );
   }
 }

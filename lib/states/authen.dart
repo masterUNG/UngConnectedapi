@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:ungconnectedapi/states/create_new_account.dart';
 import 'package:ungconnectedapi/widgets/widget_button.dart';
 
 import 'package:ungconnectedapi/widgets/widget_form.dart';
@@ -39,7 +41,10 @@ class Authen extends StatelessWidget {
                     ),
                     WidgetButton(
                       text: 'Create New Account',
-                      onPressed: () {},type: GFButtonType.transparent,
+                      onPressed: () {
+                        Get.to(CreateNewAccount());
+                      },
+                      type: GFButtonType.transparent,
                     )
                   ],
                 ),

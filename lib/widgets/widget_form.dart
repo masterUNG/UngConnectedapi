@@ -5,15 +5,18 @@ class WidgetForm extends StatelessWidget {
   const WidgetForm({
     Key? key,
     this.hintText,
+    this.labelText,
   }) : super(key: key);
 
   final String? hintText;
+  final String? labelText;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
         hintText: hintText,
+        labelText: labelText,
         filled: true,
         border: InputBorder.none,
       ),
