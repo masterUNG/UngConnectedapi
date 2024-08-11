@@ -7,8 +7,15 @@ import 'package:ungconnectedapi/widgets/widget_icon_button.dart';
 
 import 'package:ungconnectedapi/widgets/widget_image.dart';
 
-class CreateNewAccount extends StatelessWidget {
+class CreateNewAccount extends StatefulWidget {
   const CreateNewAccount({super.key});
+
+  @override
+  State<CreateNewAccount> createState() => _CreateNewAccountState();
+}
+
+class _CreateNewAccountState extends State<CreateNewAccount> {
+  final keyForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,21 +30,55 @@ class CreateNewAccount extends StatelessWidget {
             children: [
               SizedBox(
                 width: 250,
-                child: Column(
-                  children: [
-                    SizedBox(height: 16),
-                    WidgetForm(labelText: 'Name :',),
-                    SizedBox(height: 16),
-                    WidgetForm(labelText: 'User :',),
-                    SizedBox(height: 16),
-                    WidgetForm(labelText: 'Password :',),
-                    SizedBox(height: 8),
-                    WidgetButton(
-                      text: 'Create New Account',
-                      onPressed: () {},
-                      fullWidthButton: true,
-                    ),
-                  ],
+                child: Form(
+                  key: keyForm,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 16),
+                      WidgetForm(
+                        labelText: 'Name :',
+                        validator: (p0) {
+                          if (p0?.isEmpty ?? true) {
+                            return 'Please Fill Name';
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      WidgetForm(
+                        labelText: 'User :',
+                        validator: (p0) {
+                          if (p0?.isEmpty ?? true) {
+                            return 'Please Fill User';
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      WidgetForm(
+                        labelText: 'Password :',
+                        validator: (p0) {
+                          if (p0?.isEmpty ?? true) {
+                            return 'Please Fill Name';
+                          } else if (p0!.length < 6) {
+                            return 'Password ต้องมีมากกว่า 6 อักษร';
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                      SizedBox(height: 8),
+                      WidgetButton(
+                        text: 'Create New Account',
+                        onPressed: () {
+                          if (keyForm.currentState!.validate()) {}
+                        },
+                        fullWidthButton: true,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

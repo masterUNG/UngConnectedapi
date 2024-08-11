@@ -6,14 +6,16 @@ class WidgetForm extends StatelessWidget {
     Key? key,
     this.hintText,
     this.labelText,
+    this.validator,
   }) : super(key: key);
 
   final String? hintText;
   final String? labelText;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return TextFormField(validator: validator,
       decoration: InputDecoration(
         hintText: hintText,
         labelText: labelText,
