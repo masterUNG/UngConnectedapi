@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ungconnectedapi/models/user_model.dart';
+import 'package:ungconnectedapi/states/main_home.dart';
 import 'package:ungconnectedapi/utility/app_constant.dart';
 import 'package:ungconnectedapi/utility/app_controller.dart';
 
@@ -10,6 +13,35 @@ import 'package:dio/dio.dart' as dio;
 
 class AppService {
   AppController appController = Get.put(AppController());
+
+  Future<void> checkLogin({
+    required String user,
+    required String password,
+  }) async {
+    String urlApi =
+        'https://www.androidthai.in.th/fluttertraining/ungConnected/getUserWhereUser.php?isAdd=true&user=$user';
+
+    await dio.Dio().get(urlApi).then(
+      (value) {
+        if (value.toString() == 'null') {
+          Get.snackbar('User False', 'No $user in my Database');
+        } else {
+          for (var element in json.decode(value.data)) {
+            UserModel model = UserModel.fromMap(element);
+
+            if (password == model.password) {
+              //password True
+              Get.offAll( MainHome(userModel: model,));
+              Get.snackbar('Authen Success', 'Welcome to My App');
+            } else {
+              Get.snackbar('Password False', 'Please Try Again Password False',
+                  snackPosition: SnackPosition.BOTTOM);
+            }
+          }
+        }
+      },
+    );
+  }
 
   Future<void> processRegister({
     required String name,
@@ -50,7 +82,9 @@ class AppService {
               await dio.Dio().get(urlApiInsert).then(
                 (value) {
                   Get.back();
-                  Get.snackbar('Register Success', 'Please Login', backgroundColor: AppConstant.mainColor, colorText: GFColors.WHITE);
+                  Get.snackbar('Register Success', 'Please Login',
+                      backgroundColor: AppConstant.mainColor,
+                      colorText: GFColors.WHITE);
                 },
               );
             },
