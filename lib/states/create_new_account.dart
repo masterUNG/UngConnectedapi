@@ -1,6 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:ungconnectedapi/utility/app_controller.dart';
+import 'package:ungconnectedapi/utility/app_dialog.dart';
+import 'package:ungconnectedapi/utility/app_service.dart';
 import 'package:ungconnectedapi/widgets/widget_button.dart';
 import 'package:ungconnectedapi/widgets/widget_form.dart';
 import 'package:ungconnectedapi/widgets/widget_icon_button.dart';
@@ -17,14 +22,33 @@ class CreateNewAccount extends StatefulWidget {
 class _CreateNewAccountState extends State<CreateNewAccount> {
   final keyForm = GlobalKey<FormState>();
 
+  AppController controller = Get.put(AppController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
         children: [
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           displayAvatar(),
+          GetX<AppController>(
+            init: AppController(),
+            initState: (_) {},
+            builder: (AppController appController) {
+              return appController.display.value
+                  ?  appController.files.isEmpty ? const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Please Take Photo',
+                          style: TextStyle(color: GFColors.DANGER),
+                        ),
+                      ],
+                    ) : const SizedBox()
+                  : const SizedBox();
+            },
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -73,6 +97,9 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                       WidgetButton(
                         text: 'Create New Account',
                         onPressed: () {
+
+                          controller.display.value = true;
+
                           if (keyForm.currentState!.validate()) {}
                         },
                         fullWidthButton: true,
@@ -97,13 +124,50 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
           height: 250,
           child: Stack(
             children: [
-              const WidgetImage(path: 'images/avatar.png'),
+              GetX<AppController>(
+                init: AppController(),
+                initState: (_) {},
+                builder: (AppController appController) {
+                  return appController.files.isEmpty
+                      ? const WidgetImage(path: 'images/avatar.png')
+                      : Image.file(
+                          appController.files.last,
+                          fit: BoxFit.cover,
+                        );
+                },
+              ),
               Positioned(
                 bottom: 0,
                 right: 0,
                 child: WidgetIconButton(
                   icon: const Icon(Icons.photo_camera),
-                  onPressed: () {},
+                  onPressed: () {
+                    AppDialog().normalDialog(
+                        iconWidget: const WidgetImage(
+                          path: 'images/photo.png',
+                        ),
+                        titleWidget: const Text('Source Image'),
+                        contentWidget: const Text('Please Choose Source Image'),
+                        firstWidget: WidgetButton(
+                          type: GFButtonType.outline2x,
+                          text: 'Camera',
+                          onPressed: () {
+                            Get.back();
+
+                            AppService()
+                                .processGetImage(source: ImageSource.camera);
+                          },
+                        ),
+                        secondWidget: WidgetButton(
+                          text: 'Gallery',
+                          onPressed: () {
+                            Get.back();
+
+                            AppService()
+                                .processGetImage(source: ImageSource.gallery);
+                          },
+                        ));
+                  },
                 ),
               ),
             ],
