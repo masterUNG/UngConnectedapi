@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ungconnectedapi/states/authen.dart';
 import 'package:ungconnectedapi/utility/app_constant.dart';
+import 'package:ungconnectedapi/utility/app_http_override.dart';
 
 void main() {
+  
+  HttpOverrides.global = AppHttpOverride();
+
   runApp(MyApp());
 }
 

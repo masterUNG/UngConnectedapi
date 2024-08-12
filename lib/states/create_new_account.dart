@@ -24,6 +24,10 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
 
   AppController controller = Get.put(AppController());
 
+  TextEditingController nameController = TextEditingController();
+  TextEditingController userController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,15 +41,17 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
             initState: (_) {},
             builder: (AppController appController) {
               return appController.display.value
-                  ?  appController.files.isEmpty ? const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Please Take Photo',
-                          style: TextStyle(color: GFColors.DANGER),
-                        ),
-                      ],
-                    ) : const SizedBox()
+                  ? appController.files.isEmpty
+                      ? const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Please Take Photo',
+                              style: TextStyle(color: GFColors.DANGER),
+                            ),
+                          ],
+                        )
+                      : const SizedBox()
                   : const SizedBox();
             },
           ),
@@ -60,6 +66,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                     children: [
                       const SizedBox(height: 16),
                       WidgetForm(
+                        controller: nameController,
                         labelText: 'Name :',
                         validator: (p0) {
                           if (p0?.isEmpty ?? true) {
@@ -71,6 +78,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                       ),
                       const SizedBox(height: 16),
                       WidgetForm(
+                        controller: userController,
                         labelText: 'User :',
                         validator: (p0) {
                           if (p0?.isEmpty ?? true) {
@@ -82,6 +90,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                       ),
                       const SizedBox(height: 16),
                       WidgetForm(
+                        controller: passwordController,
                         labelText: 'Password :',
                         validator: (p0) {
                           if (p0?.isEmpty ?? true) {
@@ -97,10 +106,17 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                       WidgetButton(
                         text: 'Create New Account',
                         onPressed: () {
-
                           controller.display.value = true;
 
-                          if (keyForm.currentState!.validate()) {}
+                          if (keyForm.currentState!.validate()) {
+                            if (controller.files.isNotEmpty) {
+                              AppService().processRegister(
+                                name: nameController.text,
+                                user: userController.text,
+                                password: passwordController.text,
+                              );
+                            }
+                          }
                         },
                         fullWidthButton: true,
                       ),
