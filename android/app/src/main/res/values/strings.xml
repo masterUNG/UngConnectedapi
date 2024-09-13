@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ThonglorAppLogin</string>
+    <string name="facebook_app_id">482679581343922</string>
+    <string name="fb_login_protocol_scheme">fb482679581343922</string>
+    <string name="facebook_client_token">d77cece0fbd5b2c70066b987aeaf8fcc</string>
+   
+</resources>

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,10 +14,21 @@ import 'package:ungconnectedapi/utility/app_controller.dart';
 import 'package:dio/dio.dart' as dio;
 
 class AppService {
-
   AppController appController = Get.put(AppController());
 
-  
+  Future<void> processSignInWithFacebook() async {
+    
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+
+    final OAuthCredential oAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+
+    await FirebaseAuth.instance.signInWithCredential(oAuthCredential).then(
+      (value) {
+        Get.snackbar('Login Facebook', 'Welcome Login Success');
+      },
+    );
+  }
 
   Future<void> checkLogin({
     required String user,
@@ -34,7 +47,9 @@ class AppService {
 
             if (password == model.password) {
               //password True
-              Get.offAll( MainHome(userModel: model,));
+              Get.offAll(MainHome(
+                userModel: model,
+              ));
               Get.snackbar('Authen Success', 'Welcome to My App');
             } else {
               Get.snackbar('Password False', 'Please Try Again Password False',

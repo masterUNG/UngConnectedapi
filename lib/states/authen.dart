@@ -83,7 +83,9 @@ class _AuthenState extends State<Authen> {
                       GFIconButton(
                         icon: const Icon(Icons.facebook),
                         type: GFButtonType.transparent,
-                        onPressed: () {},
+                        onPressed: () async {
+                          AppService().processSignInWithFacebook();
+                        },
                         size: GFSize.LARGE,
                       )
                     ],
