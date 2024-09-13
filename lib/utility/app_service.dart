@@ -12,7 +12,10 @@ import 'package:ungconnectedapi/utility/app_controller.dart';
 import 'package:dio/dio.dart' as dio;
 
 class AppService {
+
   AppController appController = Get.put(AppController());
+
+  
 
   Future<void> checkLogin({
     required String user,

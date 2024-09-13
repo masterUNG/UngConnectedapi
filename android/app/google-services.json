@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "593013696372",
+    "project_id": "thonglor-ae054",
+    "storage_bucket": "thonglor-ae054.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593013696372:android:eda5344f050f3bbd526e21",
+        "android_client_info": {
+          "package_name": "com.masterung.thonglorproj"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV_eDDUoMnJCeKdJ5tKQW98QYG3Ffr_wQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593013696372:android:4d889b32b2a9834d526e21",
+        "android_client_info": {
+          "package_name": "com.masterung.ungconnectedapi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV_eDDUoMnJCeKdJ5tKQW98QYG3Ffr_wQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

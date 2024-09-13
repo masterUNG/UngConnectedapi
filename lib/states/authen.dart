@@ -79,6 +79,12 @@ class _AuthenState extends State<Authen> {
                           Get.to(const CreateNewAccount());
                         },
                         type: GFButtonType.transparent,
+                      ),
+                      GFIconButton(
+                        icon: const Icon(Icons.facebook),
+                        type: GFButtonType.transparent,
+                        onPressed: () {},
+                        size: GFSize.LARGE,
                       )
                     ],
                   ),
