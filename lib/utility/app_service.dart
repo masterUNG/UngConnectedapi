@@ -17,7 +17,7 @@ class AppService {
   AppController appController = Get.put(AppController());
 
   Future<void> processSignInWithFacebook() async {
-    
+
     final LoginResult loginResult = await FacebookAuth.instance.login();
 
     final OAuthCredential oAuthCredential =
@@ -26,6 +26,7 @@ class AppService {
     await FirebaseAuth.instance.signInWithCredential(oAuthCredential).then(
       (value) {
         Get.snackbar('Login Facebook', 'Welcome Login Success');
+      
       },
     );
   }
